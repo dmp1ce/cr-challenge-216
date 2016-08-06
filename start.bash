@@ -1,4 +1,7 @@
 #!/bin/bash
 
 # Use Docker to install requirements and run Haskell program
-docker-compose build && docker-compose run haskell bash -c /app/jarjar_client.hs
+echo "Building Yesod application."
+echo "This may take awhile because Yesod framework is around 500 MB."
+docker-compose build && docker-compose run --service-ports --rm \
+  haskell-yesod bash -c "cd /app && ./jarjar_quotes.hs"
