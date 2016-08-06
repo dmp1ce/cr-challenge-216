@@ -1,0 +1,19 @@
+$doctype 5
+
+<html>
+  <head>
+    <title>#{pageTitle pc}
+    ^{pageHead pc}
+  <body>
+    <h1>Jar Jar Quotes
+    <ul>
+      <li>
+        <a href=@{HomeR}>Homepage
+      <li>
+        <a href=@{RandomR}>Random
+      <li>
+        <a href=@{AboutR}>About
+
+    $maybe msg <- mmsg
+      <div #message>#{msg}
+    ^{pageBody pc}
