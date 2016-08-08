@@ -6,7 +6,7 @@ $doctype 5
     ^{pageHead pc}
   <body>
     <h1>Jar Jar Quotes
-    <ul>
+    <ul .menu>
       <li>
         <a href=@{HomeR}>Homepage
       <li>

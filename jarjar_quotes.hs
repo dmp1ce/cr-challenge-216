@@ -102,7 +102,27 @@ addQuoteWidget w e = [whamlet|
 
 homeListWidget :: (Text.Blaze.ToMarkup a) =>  Widget -> a ->
   [Entity Quote] -> Widget
-homeListWidget w e qs = addQuoteWidget w e >> quotesListWidget qs
+homeListWidget w e qs = do
+    addQuoteWidget w e
+    quotesListWidget qs
+    cssWidget
+
+cssWidget = toWidget
+  [lucius|
+    h1 {
+      text-align: center;
+    }
+    li {
+      list-style: none;
+    }
+    .menu li {
+      display: inline;
+      padding-right: 10px;
+    }
+    ul.menu {
+      text-align: center;
+    }
+  |]
 
 -- Home page post handler
 postHomeR :: Handler Html
@@ -142,7 +162,9 @@ getQuoteR quoteId = do
 
 -- About page
 getAboutR :: Handler Html
-getAboutR = defaultLayout [whamlet|Small web app for saving your favorite Jar Jar Binks quotes!|]
+getAboutR = defaultLayout $ do
+  [whamlet|Small web app for saving your favorite Jar Jar Binks quotes!|]
+  cssWidget
 
 openConnectionCount :: Int
 openConnectionCount = 10
