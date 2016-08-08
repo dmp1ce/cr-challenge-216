@@ -59,7 +59,7 @@ SiteVariable
 mkYesod "JarJarQuotes" [parseRoutes|
 /               HomeR   GET POST
 /about          AboutR  GET
-/random         RandomR GET
+-- /random         RandomR GET
 /quote/#QuoteId QuoteR  GET
 |]
 
@@ -88,8 +88,7 @@ quotesListWidget quotes = do
   toWidget [hamlet|
   <ul>
     $forall Entity quoteid quote <- quotes
-      <li>
-        <a href=@{QuoteR quoteid}>#{quoteText quote}
+      <li>#{quoteText quote}
   |]
 
 addQuoteWidget :: (Text.Blaze.ToMarkup a) =>  Widget -> a -> Widget
@@ -138,8 +137,8 @@ getQuoteR quoteId = do
   defaultLayout [whamlet|#{quoteText quote}|]
 
 -- Random page
-getRandomR :: Handler Html
-getRandomR = defaultLayout [whamlet|TODO: Show a random quote here|]
+-- getRandomR :: Handler Html
+-- getRandomR = defaultLayout [whamlet|TODO: Show a random quote here|]
 
 -- About page
 getAboutR :: Handler Html

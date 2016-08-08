@@ -10,8 +10,6 @@ $doctype 5
       <li>
         <a href=@{HomeR}>Homepage
       <li>
-        <a href=@{RandomR}>Random
-      <li>
         <a href=@{AboutR}>About
 
     $maybe msg <- mmsg
