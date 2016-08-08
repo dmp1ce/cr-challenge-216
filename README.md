@@ -2,4 +2,4 @@
 
 https://www.reddit.com/r/CoderRadio/comments/4wa09e/216_coding_challenge/
 
-See [jarjarjar.hs](jarjarjar.hs) for details.
+See [jarjar_quotes.hs](jarjar_quotes.hs) for details.
