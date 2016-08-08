@@ -15,7 +15,7 @@ Requirements:
 
 This program creates a server side web application which stores
 text into a Sqlite database. A form on the Home page is for adding new
-quotes. The Random page is for showing a random quote.
+quotes.
 
 I created this mostly by reading through the Yesod book.
 http://www.yesodweb.com/book
@@ -53,13 +53,11 @@ SiteVariable
   VarKey key
   deriving Show
 |]
---data Quote = Quote { quoteText :: Text } deriving Show
 
 -- Routes
 mkYesod "JarJarQuotes" [parseRoutes|
 /               HomeR   GET POST
 /about          AboutR  GET
--- /random         RandomR GET
 /quote/#QuoteId QuoteR  GET
 |]
 
@@ -155,10 +153,6 @@ getQuoteR quoteId = do
   quote <- runDB $ get404 quoteId
   --return $ show quote
   defaultLayout [whamlet|#{quoteText quote}|]
-
--- Random page
--- getRandomR :: Handler Html
--- getRandomR = defaultLayout [whamlet|TODO: Show a random quote here|]
 
 -- About page
 getAboutR :: Handler Html
