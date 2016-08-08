@@ -47,6 +47,11 @@ share [mkPersist sqlSettings, mkMigrate "migrateAll"] [persistLowerCase|
 Quote
   text Text
   deriving Show
+SiteVariable
+  key String
+  value String
+  VarKey key
+  deriving Show
 |]
 --data Quote = Quote { quoteText :: Text } deriving Show
 
@@ -143,13 +148,30 @@ getAboutR = defaultLayout [whamlet|Small web app for saving your favorite Jar Ja
 openConnectionCount :: Int
 openConnectionCount = 10
 
+-- Returns current migration version
+-- This function is for adding default data one time only
+runCustomMigration = do
+  versions <- selectList [SiteVariableKey ==. "Version"] []
+  case versions of
+    [] -> do
+      insert $ SiteVariable "Version" "1"
+      addDefaultData
+    (version:_) -> return $ 1
+  where
+    addDefaultData = do
+      insert $ Quote "Mesa called Jar-Jar Binks. Mesa your humble servant."
+      insert $ Quote "My forgotten, da Bosses will do terrible tings to me TERRRRRIBLE is me going back der!"
+      insert $ Quote "Ohh, maxi big da Force. Well dat smells stinkowiff."
+      return 1
+
+
 main :: IO ()
 main = runStderrLoggingT $ withSqlitePool "test.db3"
   openConnectionCount $ \pool -> liftIO $ do
     putStrLn "Starting database migration ..."
     runResourceT $ flip runSqlPool pool $ do
       runMigration migrateAll
-      insert $ Quote "Misa happy!"
+      runCustomMigration
     putStrLn "View website by going to http://localhost:3000/ in your web browser"
     putStrLn "Starting web server on port 3000 ..."
     warp 3000 $ JarJarQuotes pool
